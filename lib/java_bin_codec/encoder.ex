@@ -41,13 +41,10 @@ defmodule JavaBinCodec.Encoder do
   end
 
   def write_number(acc, number) do
-
-  end
-
-  def btilde(<<a::1, b::1, c::1, d::1, e::1, f::1, g::1, h::1>>)  do
-    [a, b, c, d, e, f, g, h] = [a, b, c, d, e, f, g, h]
-    |> Enum.map(fn 0 -> 1; 1 -> 0 end)
-    <<a::1, b::1, c::1, d::1, e::1, f::1, g::1, h::1>>
+    case band(number, complement(0x7f)) do
+      0 -> :zero
+      n -> :non_zero
+    end
   end
 
 end
